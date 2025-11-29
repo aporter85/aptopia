@@ -45,6 +45,25 @@ services:
     ports:
       - 8080:8080 
     restart: unless-stopped
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    privileged: true
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - PUID=0
+      - PGID=0
+      - VERSION=docker
+      - TZ=America/Los_Angeles
+      - PLEX_CLAIM=claim-qyNgQ1rgzezMuUkau6Nn
+    volumes:
+      - /home/docker/plex/config:/config
+      - /share/plex/transcode:/transcode
+      - /Volume1/Media:/data
+    ports:
+      - 32400:32400
+    restart: unless-stopped
 
 networks:
   sabnzbd_default:
