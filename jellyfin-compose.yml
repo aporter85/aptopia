@@ -1,0 +1,23 @@
+version: '3.8' # Use a recent compose file version
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    user: 0:0 # Host user ID and group ID for permissions
+    network_mode: 'bridge' # Can use 'host' mode for DLNA support
+environment:
+  - TZ=America/Los_Angeles
+ports:
+  - 8096:8096 # Web UI port
+  # - 8920:8920 # Optional HTTPS port
+volumes:
+  - /home/docker/jellyfin/config:/config # Configuration files
+  - /home/docker/jellyfin/cache:/cache   # Cache files
+  - /Volume1:/media:ro    # Your media library (read-only recommended)
+  # Uncomment the following line to enable a dedicated transcode path for better performance
+  # - /path/to/jellyfin/transcodes:/data/transcode
+  # Uncomment the following lines for hardware transcoding capabilities:
+# devices:
+#   - /dev/dri:/dev/dri # For Intel iGPUs or similar
+#   - /dev/nvidiactl:/dev/nvidiactl # For Nvidia GPUs (requires Nvidia Docker runtime)
+restart: 'unless-stopped'
