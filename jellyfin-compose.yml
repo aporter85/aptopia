@@ -15,9 +15,9 @@ volumes:
   - /home/docker/jellyfin/cache:/cache   # Cache files
   - /Volume1:/media:ro    # Your media library (read-only recommended)
   # Uncomment the following line to enable a dedicated transcode path for better performance
-  # - /path/to/jellyfin/transcodes:/data/transcode
+  - /home/docker/jellyfin/transcodes:/data/transcode
   # Uncomment the following lines for hardware transcoding capabilities:
-# devices:
-#   - /dev/dri:/dev/dri # For Intel iGPUs or similar
+devices:
+  - /dev/dri:/dev/dri # For Intel iGPUs or similar
 #   - /dev/nvidiactl:/dev/nvidiactl # For Nvidia GPUs (requires Nvidia Docker runtime)
 restart: 'unless-stopped'
