@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8888:8888/tcp    # HTTP proxy (optional)
+      - 8388:8388/tcp    # Shadowsocks (optional)
+      - 8388:8388/udp    # Shadowsocks (optional)
+    volumes:
+      - ./gluetun:/gluetun  # Persistent storage for logs and IP history
+    environment:
+      - TZ=UTC
+      - VPN_SERVICE_PROVIDER=nordvpn
+      - VPN_TYPE=openvpn
+      - OPENVPN_USER=         #nordvpn manual config username
+      - OPENVPN_PASSWORD=     #nordvpn manual config password
+#      - REGION=United States  # Optional: set your preferred country
+      - SERVER_COUNTRIES=United States
+      - PROTOCOL=udp          # or tcp
+      - FIREWALL=on           # Acts as a kill switch
